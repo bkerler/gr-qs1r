@@ -1,0 +1,56 @@
+id: qs1r_qs1r_src
+label: 'QS1R Source'
+category: '[Sources]'
+flags: [ throttle, python, cpp ]
+
+templates:
+  imports: from gnuradio import qs1r
+  make: qs1r.qs1r_src(${frequency}, ${samplerate}, ${pga_flag}, ${rand_flag}, ${dith_flag}, ${ppm})
+
+parameters:
+  -   id: frequency
+      label: Frequency (Hz)
+      dtype: int
+      value: 10000000
+  -   id: ppm
+      label: Frequency corr. (ppm)
+      dtype: int
+      value: 0
+  -   id: samplerate
+      label: Sample Rate
+      dtype: int
+      default: '2.5 MHz'
+      options: [25000,50000,125000,250000,500000,625000,1250000,1562500,2500000]
+      option_labels: ['25 kHz','50 kHz','125 kHz','250 kHz','500 kHz','625 kHz','1.25 MHz','1.5625 MHz','2.5 MHz']
+  -   id: pga_flag
+      label: PGA
+      default: 'True'
+      options: ['True','False']
+      options_labels: ['Yes','No']
+      dtype: bool
+  -   id: rand_flag
+      label: RAND
+      default: 'True'
+      options: ['True','False']
+      options_labels: ['Yes','No']
+      dtype: bool
+  -   id: dith_flag
+      label: DITH
+      default: 'False'
+      options: ['True','False']
+      options_labels: ['Yes','No']
+      dtype: bool
+outputs:
+  -   domain: stream
+      label: out
+      dtype: int
+
+documentation: 'This block wraps the QS1R USB Direct Sampling Receiver \
+    into one convenient GNU Radio source block.
+    PGA is ADC PGA Gain Select Set to 0 for low gain, set to 1 for high gain.
+    RAND is ADC Randomizer Enable Set to 1 to enable ADC randomizer function.
+    DITH is ADC Dither Enable Set to 1 to enable ADC dithering function.
+    The sample rate is up to 2500 ksps. Bandwidth will be 80% \
+    of setted samplerate.'
+
+file_format: 1

@@ -18,31 +18,39 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifndef INCLUDED_QS1R_QS1R_SRC_IMPL_H
-#define INCLUDED_QS1R_QS1R_SRC_IMPL_H
 
-#include <gnuradio/qs1r/qs1r_src.h>
+#ifndef INCLUDED_QS1R_QS1R_SRC_H
+#define INCLUDED_QS1R_QS1R_SRC_H
+
+#include <gnuradio/qs1r/api.h>
+#include <gnuradio/sync_block.h>
 
 namespace gr {
   namespace qs1r {
 
-    class qs1r_src_impl : public qs1r_src
+    /*!
+     * \brief <+description of block+>
+     * \ingroup qs1r
+     *
+     */
+    class QS1R_API qs1r_src : virtual public gr::sync_block
     {
-     private:
-      // Nothing to declare in this block.
-
      public:
-      qs1r_src_impl(unsigned long frequency, unsigned int samplerate, bool pga_flag, bool rand_flag, bool dith_flag, int ppm);
-      ~qs1r_src_impl();
+      typedef std::shared_ptr<qs1r_src> sptr;
 
-      // Where all the action really happens
-      int work(int noutput_items,
-	       gr_vector_const_void_star &input_items,
-	       gr_vector_void_star &output_items);
+      /*!
+       * \brief Return a shared_ptr to a new instance of qs1r::qs1r_src.
+       *
+       * To avoid accidental use of raw pointers, qs1r::qs1r_src's
+       * constructor is in a private implementation
+       * class. qs1r::qs1r_src::make is the public interface for
+       * creating new instances.
+       */
+      static sptr make(unsigned long frequency, unsigned int samplerate, bool pga_flag, bool rand_flag, bool dith_flag, int ppm);
     };
 
   } // namespace qs1r
 } // namespace gr
 
-#endif /* INCLUDED_QS1R_QS1R_SRC_IMPL_H */
+#endif /* INCLUDED_QS1R_QS1R_SRC_H */
 
